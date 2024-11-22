@@ -47,34 +47,9 @@ which creats the following structure:
         * \_\_init__.py -->>> package init file
 * db.sqlite3 -->>> database file
 
-No urls.py file is created in the app folder, but it's created in the project folder. So we need to mannualy create urls.py files for each app. 
-Then link the app urls.py file to the project urls.py file using the include() function from django.urls module.
+No urls.py file is created in the app folder, but it's created in the project folder. So we need to mannualy create urls.py files for each app.
+Then link the app urls.py file to the project urls.py file using the include() function from django.urls module, to rout views.py files through urls.py files, which is called routing.
 
-### 4. Add the app to settings.py
-
-add the following to the INSTALLED_APPS in settings.py:
-> 'app_name'
-
-### 6. Add bootstrap to templates
-
-add the following to the templates in settings.py:
-> 'bootstrap4'
-
-### 7. Add bootstrap to base.html
-    * migrations -->>> database migrations
-        * \_\_init__.py -->>> package init file
+## Views, Rounting, URL
 
 
-### 3. Add bootstrap to settings.py
-
-add the following to the INSTALLED_APPS in settings.py:
-> 'bootstrap4'
-
-### 5. Add bootstrap to urls.py
-
-add the following to the urlpatterns in urls.py:
-> from django.contrib import admin
-> from django.urls import path
-> from . import views
-
-> urlpatterns = [
