@@ -7,7 +7,7 @@ from mypackage.mysubmodule import my_sub_module_function
 # print(mymodule)
 
 
-if __name__ == "__main__":
-    person = Person("John", 30)
-    person.say_hello()
-    my_sub_module_function()
+# if __name__ == "__main__":
+#     person = Person("John", 30)
+#     person.say_hello()
+#     my_sub_module_function()
