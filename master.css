@@ -1,0 +1,47 @@
+body{
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h2{
+    color: darkblue;
+    font-size: 40px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 2px gray;
+    background-color: bisque;
+}
+
+div{
+    margin: 50px;
+    padding: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: lightblue;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: darkblue;
+}
+
+span{
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px gray;
+}
+
+.myclass{
+    color: green;
+}
+
+
+#myid{
+    color: blue;
+}
+
+#myid2{
+    color: red;
+}

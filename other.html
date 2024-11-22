@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>go to example.html</h1>
+    
+    <form action="example.html">
+        <label for="f-name">First Name:</label>
+        <input type="text" id="f-name" name="fname"><br>
+
+        <label for="l-name">Last Name:</label>
+        <input type="text" id="l-name" name="lname"><br>
+
+        <input type="submit">
+    </form>
+    
+    <br><br>
+
+    <form action="example.html" method="get">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="email goes here"><br>
+
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="password"><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <br><br>
+    
+    <h1>hotel feedback</h1>
+    <form action="example.html">
+        <p>ara you inside or outside USA?</p>
+
+        <input type="radio" id="inside" name="outside">
+        <label for="inside">Inside</label>
+        <br>
+        <input type="radio" id="outside" name="outside">
+        <label for="outside">Outside</label><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <form action="example.html">
+        <p>ara you inside or outside USA?</p>
+
+        <input type="radio" id="inside" name="location" value="inside"> 
+        <label for="inside">Inside</label>
+        <br>
+        <input type="radio" id="outside" name="location" value="outside">
+        <label for="outside">Outside</label><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <form action="example.html">
+        <p>how was our service?</p>
+        <select name="stars" id="">
+            <option value="1">bad</option>
+            <option value="2">ok</option>
+            <option value="3">great</option>
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <form action="example.html">
+        <p>any other comments?</p>
+        <textarea name="comments" id="" cols="30" rows="10"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>
