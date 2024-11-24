@@ -55,7 +55,7 @@ Then link the app urls.py file to the project urls.py file using the include() f
 how views connect to urls before passing informatin to templates.
 
 __Function based views__
-1. connect a View to a URL with path():
+### 1. Connect a View to a URL with path():
 * route
 * view
 
@@ -67,7 +67,7 @@ __Function based views__
 ```
 
 url=domain/app_name/view_name
-2. create a homepage view 
+### 2. Create a homepage view 
 ```python
 def home_view(request):
     return HttpResponse("Home page")
@@ -80,9 +80,9 @@ urlpatterns = [
 
 it can also be done by creating a views.py file in the site folder and connecting the view to the url in the urls.py file.
 
-3. dynamic routing
+### 3. Dynamic routing
 
-use a dictionary to store the articles.
+use a dictionary to store different pages and pass the key as a parameter to the view function.
 
 ```python
 articles = {
@@ -110,7 +110,7 @@ urlpatterns = [
 ]
 ```
 
-4. 404 and redirect
+### 4. 404 and redirect
 
 
 
