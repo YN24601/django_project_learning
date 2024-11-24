@@ -80,6 +80,38 @@ urlpatterns = [
 
 it can also be done by creating a views.py file in the site folder and connecting the view to the url in the urls.py file.
 
+3. dynamic routing
+
+use a dictionary to store the articles.
+
+```python
+articles = {
+    'sports': 'Sports Page',
+    'music': 'Music Page',
+    'finance': 'Finance Page',
+}
+
+def news_view(request, topic):
+    return HttpResponse(articles[topic])
+###########
+urlpatterns = [
+    path('<str:topic>/', views.news_view),
+]
+```
+
+with multiple parameters
+
+```python
+def news_time_view(request, topic, year):
+    return HttpResponse(articles[topic] + ' in the year ' + str(year))
+###########
+urlpatterns = [
+    path('<str:topic>/<int:year>/', views.news_time_view)
+]
+```
+
+4. 404 and redirect
+
 
 
 
