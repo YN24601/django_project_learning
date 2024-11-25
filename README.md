@@ -110,7 +110,83 @@ urlpatterns = [
 ]
 ```
 
-### 4. 404 and redirect
+### 4. 404 error handling
+
+use try except to handle errors and raise Http404 to display error message or redirect to another page.
+
+```python
+def news_view(request, topic):
+    try:
+        result = articles[topic]
+        return HttpResponse(result)
+    except KeyError:
+        result = "Page not found"
+        # return HttpResponseNotFound(result)
+        raise Http404(result) # or redirect to a 404.html page
+```
+When using HttpResponseNotFound, there will be a 404 error message, but when using raise Http404, the error message will be displayed in the browser. That's because the raise function will start the error handling process(debug mode). To display the error message in the browser, we need to change the DEBUG = True in the settings.py file to DEBUG = False, and set the ALLOWED_HOSTS = ["127.0.0.1"] to allow the browser to access the website.
+
+The debug mode is only used for development, and should be turned off when deploying the website to production.
+
+```python
+# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = ["127.0.0.1"]
+```
+
+### 5. Redirect
+
+use HttpResponseRedirect to redirect to another page. Add a redirect function to the views.py file, and add a url to the urls.py file.
+
+
+
+```python
+### views.py
+# domain.com/my_app/0 ---> domain.com/my_app/sports
+# domain.com/my_app/1 ---> domain.com/my_app/music
+# ...
+def num_page_redirect_view(request, num):
+    topic_list = list(articles.keys())
+    topic = topic_list[num]
+    return HttpResponseRedirect(topic)
+
+### urls.py
+urlpatterns = [
+    path('<int:num>/', views.num_page_redirect_view), 
+    # ...
+]
+```
+
+An error occure when I'm using relative url in the HttpResponseRedirect function. So when visiting domain.com/my_app/0, it will append the url to the current url, so the url will be redirect to domain.com/my_app/0/sports instead of domain.com/my_app/sports.
+To fix this problem, I need to use absolute url.
+
+First, I need to set the routing name for the news_view function in the urls.py file.
+```python
+urlpatterns = [
+    path('<int:num>/', views.num_page_redirect_view), 
+    path('<str:topic>/', views.news_view, name='news_topic'),
+    path('<str:topic>/<int:year>/', views.news_time_view)
+]
+```
+
+Then, import reverse function from django.urls, and get the absolute url in HttpResponseRedirect function.
+
+```python
+from django.urls import reverse
+def num_page_redirect_view(request, num):
+    topic_list = list(articles.keys())
+    topic = topic_list[num]
+    return HttpResponseRedirect(reverse('news_view', args=(topic,)))
+```
+
+The above can also done without reverse function by manually setting the url. But using reverse function is more convenient and less error-prone.
+
+
+### 6. Create a template
+
+create a templates folder in the app folder and create a html file in the templates folder.
 
 
 

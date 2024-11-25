@@ -13,7 +13,8 @@ urlpatterns = [
 '''
 urlpatterns = [
     # path('<topic>/', views.news_view)
-    path('<str:topic>/', views.news_view),
+    path('<int:num>/', views.num_page_redirect_view), 
+    path('<str:topic>/', views.news_view, name='news_topic'),
     path('<str:topic>/<int:year>/', views.news_time_view)
 ]
 
