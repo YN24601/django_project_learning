@@ -140,8 +140,6 @@ ALLOWED_HOSTS = ["127.0.0.1"]
 
 use HttpResponseRedirect to redirect to another page. Add a redirect function to the views.py file, and add a url to the urls.py file.
 
-
-
 ```python
 ### views.py
 # domain.com/my_app/0 ---> domain.com/my_app/sports
@@ -159,8 +157,10 @@ urlpatterns = [
 ]
 ```
 
+#### Redirect with reverse function
+
 An error occure when I'm using relative url in the HttpResponseRedirect function. So when visiting domain.com/my_app/0, it will append the url to the current url, so the url will be redirect to domain.com/my_app/0/sports instead of domain.com/my_app/sports.
-To fix this problem, I need to use absolute url.
+To fix this problem, I need to use absolute url by reference the url name.
 
 First, I need to set the routing name for the news_view function in the urls.py file.
 ```python

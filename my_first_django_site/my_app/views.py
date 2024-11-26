@@ -21,7 +21,6 @@ def music_view(request):
 '''
 
 def news_view(request, topic: str):
-    print(topic)
     try:
         result = articles[topic]
         return HttpResponse(result)
@@ -35,13 +34,10 @@ def news_time_view(request, topic, year):
 
 # redirects
 # domain.com/my_app/0 ---> domain.com/my_app/sports
-# domain.com/my_app/1 ---> domain.com/my_app/music
 # ...
 def num_page_redirect_view(request, num: int):
     topic_list = list(articles.keys())
     topic = topic_list[num]
-    print(num, topic)
-    print(topic_list)
     # return HttpResponseRedirect(topic)
     return HttpResponseRedirect(reverse('news_topic', args=[topic, ]))
     
