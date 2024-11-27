@@ -213,3 +213,44 @@ urlpatterns = [
     path('', views.simple_view), # domain.com/my_app/
 ]
 ```
+
+### 2. Template directory and rendering
+
+Usually the template foders are separated base on their applictions, the foder name is the same as the app name. So we need to register the custom appliction ,and its cooresponding template folder in the settings.py file. [vedio link]( https://www.bilibili.com/video/BV16a41147Xh/?p=58)
+
+#### start a new project:
+
+Create a new project and add a application by using the command:
+> django-admin startproject my_site             
+> cd my_site                       
+> python3 manage.py startapp my_app
+
+Then create urls.py in the my_app folder, to connect the views and site-urls. 
+Add function in the views.py file, and render the template in the function.
+
+run the command: (this will be really useful when using the models)
+> python3 manage.py migrate
+
+add the appliction configuration class from apps.py file in the settings.py file.
+```python
+INSTALLED_APPS = [
+    'my_app.apps.MyAppConfig',
+]
+```
+
+run the command: 
+> python3 manage.py makemigrations my_app
+
+Now the project will not need to worry about the DIRS of templates in the setting.py, because the templates folder will be in the my_app folder (APP_DIR should be set to True in the settings.py file).
+
+Create a template folder in the my_app folder, and create html files in the folder, which should be the same as the rendered html file name in views.py
+
+run the project by using the command:
+> python3 manage.py runserver
+
+
+### 3. Django template language
+
+### 4. Template specific context
+
+### 5. Exercise
