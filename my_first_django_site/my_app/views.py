@@ -34,7 +34,6 @@ def news_time_view(request, topic, year):
 
 # redirects
 # domain.com/my_app/0 ---> domain.com/my_app/sports
-# ...
 def num_page_redirect_view(request, num: int):
     topic_list = list(articles.keys())
     topic = topic_list[num]
@@ -42,4 +41,5 @@ def num_page_redirect_view(request, num: int):
     return HttpResponseRedirect(reverse('news_topic', args=[topic, ]))
     
 
-
+def simple_view(request):
+    return render(request, 'my_app/example.html')

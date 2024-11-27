@@ -184,11 +184,75 @@ def num_page_redirect_view(request, num):
 The above can also done without reverse function by manually setting the url. But using reverse function is more convenient and less error-prone.
 
 
-### 6. Create a template
+### 6. Create and connect to a template
 
-create a templates folder in the app folder and create a html file in the templates folder.
+create a templates folder in the app folder and create html files in the templates folder. And add the folder path to the TEMPLATES in the settings.py file, by using os.path.join function to connect the BASE_DIR and the templates folder.
+
+```python
+# settings.py
+import os
+TEMPLATES = [
+    {
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+    },
+]
+```
+```python  
+# views.py
+from django.shortcuts import render
+def simple_view(request):
+    return render(request, 'my_app/example.html')
+```
+```python
+# my_app/urls.py
+urlpatterns = [
+    path('', views.simple_view), # domain.com/my_app/
+]
+```
+
+### 7. Create a news view
+
+create a news view function in the views.py file, and add a url to the urls.py file.
+
+```python
+### views.py
+def news_view(request, topic):
+    try:
+        result = articles[topic]
+        return HttpResponse(result)
+    except KeyError:
+        result = "Page not found"
+        # return HttpResponseNotFound(result)
+        raise Http404(result) # or redirect to a 404.html page
+
+### urls.py
+urlpatterns = [
 
 
+
+### 7. Create a simple view
+
+create a simple view function in the views.py file, and add a url to the urls.py file.
+
+```python
+### views.py
+def simple_view(request):
+    return HttpResponse('Hello, World!')
+
+### urls.py
+urlpatterns = [
+    path('simple/', views.simple_view),
+    # ...
+]
+```
+
+### 8. Create a news view
+
+create a news view function in the views.py file, and add a url to the urls.py file.
+
+```python
+### views.py
+def news_view(request, topic):
 
 
 ## Views & Templates

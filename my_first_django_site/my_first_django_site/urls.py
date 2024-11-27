@@ -24,7 +24,7 @@ def home_view(request):
     return HttpResponse("Home page")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('my_app/', include('my_app.urls')),
     path('', home_view)
 ]

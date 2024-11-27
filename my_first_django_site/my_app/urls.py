@@ -11,10 +11,14 @@ urlpatterns = [
     path('music/', views.music_view, name='music')
 ]
 '''
+
 urlpatterns = [
     # path('<topic>/', views.news_view)
-    path('<int:num>/', views.num_page_redirect_view), 
-    path('<str:topic>/', views.news_view, name='news_topic'),
-    path('<str:topic>/<int:year>/', views.news_time_view)
+    # path('<int:num>/', views.num_page_redirect_view), 
+    # path('<str:topic>/', views.news_view, name='news_topic'),
+    # path('<str:topic>/<int:year>/', views.news_time_view),
+    path('', views.simple_view) # domain.com/my_app/
 ]
+
+
 
