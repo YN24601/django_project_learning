@@ -18,9 +18,11 @@ Personal learning project to explore bootstrap and Django.
     - [2. Template directory and rendering](#2-template-directory-and-rendering)
       - [start a new project:](#start-a-new-project)
   - [Django template language](#django-template-language)
-    - [1.Template variable and context](#1template-variable-and-context)
-    - [2.Template Comment](#2template-comment)
-    - [3.Filters and Tags](#3filters-and-tags)
+    - [1. Template variable and context](#1-template-variable-and-context)
+    - [2. Template Comment](#2-template-comment)
+    - [3. Filters and Tags](#3-filters-and-tags)
+    - [4. Tags and URL mapping](#4-tags-and-url-mapping)
+    - [5. Template inheritance](#5-template-inheritance)
 
 ## Setup
 
@@ -277,7 +279,7 @@ run the project by using the command:
 
 ## Django template language
 
-### 1.Template variable and context
+### 1. Template variable and context
 
 The context is a dictionary that contains the data that will be passed to the template when using the render function.
 
@@ -296,7 +298,7 @@ The dictionary values can be accessed in the template by using the {{ variable_n
 </body>
 ```
 
-### 2.Template Comment
+### 2. Template Comment
 
 syntax:
 
@@ -304,7 +306,15 @@ syntax:
 {# comment #}
 ```
 
-### 3.Filters and Tags
+or
+
+```html
+{% comment %}
+comment
+{% endcomment %}
+```
+
+### 3. Filters and Tags
 
 A filter is a function that is applied to a variable before it is displayed in the template. That's very similar to the filter function in python. Syntax: {{ variable_name | filter_name }}
 
@@ -333,3 +343,63 @@ eg: for-loop
 ```
 
 There are a lot of built-in tags and filters in Django, see the [official documentation](https://docs.djangoproject.com/en/5.1/ref/templates/builtins/). When using tags, it's important to mind the spacing, otherwise it may cause syntax error.
+
+### 4. Tags and URL mapping
+
+Tag `url` can be used to map the url to the view function, instead set the path in the href attribute in the html file.
+
+1. in the urls.py file, define the `app_name` and the `name` parameter in the path function
+
+    ```python
+    app_name = 'my_app'
+    urlpatterns = [
+        path('', views.example_view, name='example'),
+        path('variable/', views.variable_view, name='variable'),
+    ]
+    ```
+
+2. Use the `url` tag in the template file
+
+    ```html
+    <a href="{% url "my_app:variable" %}">go to variable page</a>
+    ```
+
+    if the template file is in the site level folder, the url tag should be `{% url "variable" %}`, but changes are needed when the template file is in the site level folder, see next section.
+
+### 5. Template inheritance
+
+Use the `block` tag to define the block in the base template file, and use the `{% extends "base.html" %}` tag to inherit the template file. Usually used when the template file is shared by multiple views, such as the header and footer of the website.
+
+In the base template file, define the block by using the `{% block block_name %}` tag.
+
+```html
+{% block block_name %}
+block content
+{% endblock %}
+```
+
+In the child template file, use the `{% extends "base.html" %}` tag to inherit the base template file, and use the `{% block block_name %}` tag to override the content of the block.
+
+```html
+{% extends "base.html" %}
+
+{% block content %}
+child content
+{% endblock %}
+
+```
+
+to extend the base.html file in the project level folder, the 'DIRS' parameter in the TEMPLATES setting should be set to the folder.
+
+```python
+import os
+#--------
+
+TEMPLATES = [
+    {
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+    }]
+```
+
+See [base.html](my_site/templates/base.html) and [child.html](my_site/my_app/templates/my_app/child.html) for more details.
+

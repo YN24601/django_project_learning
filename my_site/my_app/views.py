@@ -10,3 +10,6 @@ def variable_view(request):
         'listkey': [1, 2, 3]
         }
     return render(request, 'my_app/variable.html', context=my_var)
+
+def child_view(request):
+    return render(request, 'my_app/child.html')
