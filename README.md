@@ -248,8 +248,38 @@ Create a template folder in the my_app folder, and create html files in the fold
 run the project by using the command:
 > python3 manage.py runserver
 
+#### Template variable and context
+
+The context is a dictionary that contains the data that will be passed to the template when using the render function.
+
+```python
+def variable_view(request):
+    my_var = {'key': 'value'}
+    return render(request, 'my_app/variable.html', context=my_var)
+```
+
+The dictionary values can be accessed in the template by using the {{ variable_name.key }} syntax.
+
+```html
+<body>
+        {{ key1 }}
+        {{ listkey.0 }}
+</body>
+```
+
+#### Template comment
+
+```html
+{# comment #}
+```
+
+#### Template inheritance
+
+The template inheritance is a way to share the common code between the templates. The base template is the template that contains the common code, and the child template is the template that inherits the base template.
 
 ### 3. Django template language
+
+
 
 ### 4. Template specific context
 
