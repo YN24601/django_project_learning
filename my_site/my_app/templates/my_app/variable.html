@@ -9,9 +9,18 @@
     <h1>variable html</h1>
     <p>
         <!-- {{ my_var }} -->
-        {{ key1 }}
+        {{ key1 | upper }}
+        {{ key1 | lower | capfirst}}
         {{ listkey.0 }}
         {# comment #}
     </p>
+
+    <ul>
+        {% for item in listkey %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+    
 </body>
 </html>

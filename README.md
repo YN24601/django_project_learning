@@ -2,6 +2,26 @@
 
 Personal learning project to explore bootstrap and Django.
 
+- [Personal Learning Project](#personal-learning-project)
+  - [Setup](#setup)
+    - [1. Start a django project](#1-start-a-django-project)
+    - [2. Create a django application(App)](#2-create-a-django-applicationapp)
+  - [Views, Rounting, URL](#views-rounting-url)
+    - [1. Connect a View to a URL with path()](#1-connect-a-view-to-a-url-with-path)
+    - [2. Create a homepage view](#2-create-a-homepage-view)
+    - [3. Dynamic routing](#3-dynamic-routing)
+    - [4. 404 error handling](#4-404-error-handling)
+    - [5. Redirect](#5-redirect)
+      - [Redirect with reverse function](#redirect-with-reverse-function)
+  - [Views \& Templates](#views--templates)
+    - [1. Create templates and connect to views](#1-create-templates-and-connect-to-views)
+    - [2. Template directory and rendering](#2-template-directory-and-rendering)
+      - [start a new project:](#start-a-new-project)
+  - [Django template language](#django-template-language)
+    - [1.Template variable and context](#1template-variable-and-context)
+    - [2.Template Comment](#2template-comment)
+    - [3.Filters and Tags](#3filters-and-tags)
+
 ## Setup
 
 ### 1. Start a django project
@@ -9,12 +29,13 @@ Personal learning project to explore bootstrap and Django.
 run the following command in the terminal:
 > django-admin startproject project_name
 which creates the following structure:
+
 * project_name
-    * \_\_init__.py -->>> package init file
-    * settings.py -->>> config setting for the project
-    * urls.py -->>> url routing for the project
-    * asgi.py -->>> ASGI config for the project; web server gateway interface
-    * wsgi.py -->>> WSGI config for the project; web server gateway interface
+  * \_\_init__.py -->>> package init file
+  * settings.py -->>> config setting for the project
+  * urls.py -->>> url routing for the project
+  * asgi.py -->>> ASGI config for the project; web server gateway interface
+  * wsgi.py -->>> WSGI config for the project; web server gateway interface
 * manage.py -->>> command line utility for administrative tasks
 
 get into this folder and run the following command in the terminal:
@@ -33,31 +54,32 @@ When refering to __application__ of a Django project, it's not a website app, bu
 run the following command in the terminal:
 > python3 manage.py startapp app_name
 
-ep: 
-> python3 manage.py startapp blog
+ep: > python3 manage.py startapp blog
 
 which creates the following structure:
-* app_name
-    * \_\_init__.py -->>> package init file
-    * admin.py -->>> admin interface for the app
-    * apps.py -->>> app config
-    * models.py
-    * tests.py
-    * views.py
-    * migrations -->>> database migrations
-        * \_\_init__.py -->>> package init file
-* db.sqlite3 -->>> database file
+
+- app_name
+  - \_\_init__.py -->>> package init file
+  - admin.py -->>> admin interface for the app
+  - apps.py -->>> app config
+  - models.py
+  - tests.py
+  - views.py
+  - migrations -->>> database migrations
+    - \_\_init__.py -->>> package init file
+- db.sqlite3 -->>> database file
 
 No urls.py file is created in the app folder, but it's created in the project folder. So we need to mannualy create urls.py files for each app.
 Then link the app urls.py file to the project urls.py file using the include() function from django.urls module, to rout views.py files through urls.py files, which is called routing.
 
 ## Views, Rounting, URL
+
 how views connect to urls before passing informatin to templates.
 
-__Function based views__
-### 1. Connect a View to a URL with path():
-* route
-* view
+### 1. Connect a View to a URL with path()
+
+- route
+- view
 
 ```python
  urlpatterns = [
@@ -67,7 +89,9 @@ __Function based views__
 ```
 
 url=domain/app_name/view_name
-### 2. Create a homepage view 
+
+### 2. Create a homepage view
+
 ```python
 def home_view(request):
     return HttpResponse("Home page")
@@ -93,7 +117,7 @@ articles = {
 
 def news_view(request, topic):
     return HttpResponse(articles[topic])
-###########
+#----------------
 urlpatterns = [
     path('<str:topic>/', views.news_view),
 ]
@@ -104,7 +128,7 @@ with multiple parameters
 ```python
 def news_time_view(request, topic, year):
     return HttpResponse(articles[topic] + ' in the year ' + str(year))
-###########
+#----------------
 urlpatterns = [
     path('<str:topic>/<int:year>/', views.news_time_view)
 ]
@@ -124,6 +148,7 @@ def news_view(request, topic):
         # return HttpResponseNotFound(result)
         raise Http404(result) # or redirect to a 404.html page
 ```
+
 When using HttpResponseNotFound, there will be a 404 error message, but when using raise Http404, the error message will be displayed in the browser. That's because the raise function will start the error handling process(debug mode). To display the error message in the browser, we need to change the DEBUG = True in the settings.py file to DEBUG = False, and set the ALLOWED_HOSTS = ["127.0.0.1"] to allow the browser to access the website.
 
 The debug mode is only used for development, and should be turned off when deploying the website to production.
@@ -132,7 +157,6 @@ The debug mode is only used for development, and should be turned off when deplo
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = False
-
 ALLOWED_HOSTS = ["127.0.0.1"]
 ```
 
@@ -163,6 +187,7 @@ An error occure when I'm using relative url in the HttpResponseRedirect function
 To fix this problem, I need to use absolute url by reference the url name.
 
 First, I need to set the routing name for the news_view function in the urls.py file.
+
 ```python
 urlpatterns = [
     path('<int:num>/', views.num_page_redirect_view), 
@@ -183,7 +208,6 @@ def num_page_redirect_view(request, num):
 
 The above can also done without reverse function by manually setting the url. But using reverse function is more convenient and less error-prone.
 
-
 ## Views & Templates
 
 the relationship between views and templates.
@@ -201,12 +225,14 @@ TEMPLATES = [
     },
 ]
 ```
+
 ```python  
 # views.py
 from django.shortcuts import render
 def simple_view(request):
     return render(request, 'my_app/example.html')
 ```
+
 ```python
 # my_app/urls.py
 urlpatterns = [
@@ -221,17 +247,18 @@ Usually the template foders are separated base on their applictions, the foder n
 #### start a new project:
 
 Create a new project and add a application by using the command:
-> django-admin startproject my_site             
-> cd my_site                       
+> django-admin startproject my_site
+> cd my_site
 > python3 manage.py startapp my_app
 
-Then create urls.py in the my_app folder, to connect the views and site-urls. 
+Then create urls.py in the my_app folder, to connect the views and site-urls.
 Add function in the views.py file, and render the template in the function.
 
 run the command: (this will be really useful when using the models)
 > python3 manage.py migrate
 
 add the appliction configuration class from apps.py file in the settings.py file.
+
 ```python
 INSTALLED_APPS = [
     'my_app.apps.MyAppConfig',
@@ -248,7 +275,9 @@ Create a template folder in the my_app folder, and create html files in the fold
 run the project by using the command:
 > python3 manage.py runserver
 
-#### Template variable and context
+## Django template language
+
+### 1.Template variable and context
 
 The context is a dictionary that contains the data that will be passed to the template when using the render function.
 
@@ -267,20 +296,40 @@ The dictionary values can be accessed in the template by using the {{ variable_n
 </body>
 ```
 
-#### Template comment
+### 2.Template Comment
+
+syntax:
 
 ```html
 {# comment #}
 ```
 
-#### Template inheritance
+### 3.Filters and Tags
 
-The template inheritance is a way to share the common code between the templates. The base template is the template that contains the common code, and the child template is the template that inherits the base template.
+A filter is a function that is applied to a variable before it is displayed in the template. That's very similar to the filter function in python. Syntax: {{ variable_name | filter_name }}
 
-### 3. Django template language
+```html
+    {{ key1 | upper }}
+    {{ key1 | length}}
+    {{ key1 | lower | capfirst}}
+```
 
+Django can provied further logic in the template by using tags that are embedded in the template language. Synax:
 
+```html
+{% tag_name %}
+{{ variable_name }}
+{% endtag_name %}
+```
 
-### 4. Template specific context
+eg: for-loop
 
-### 5. Exercise
+```html
+<ul>
+    {% for item in listkey %}
+        <li>{{ item }}</li>
+    {% endfor %}
+</ul>
+```
+
+There are a lot of built-in tags and filters in Django, see the [official documentation](https://docs.djangoproject.com/en/5.1/ref/templates/builtins/). When using tags, it's important to mind the spacing, otherwise it may cause syntax error.
