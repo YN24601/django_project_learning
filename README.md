@@ -23,6 +23,8 @@ Personal learning project to explore bootstrap and Django.
     - [3. Filters and Tags](#3-filters-and-tags)
     - [4. Tags and URL mapping](#4-tags-and-url-mapping)
     - [5. Template inheritance](#5-template-inheritance)
+    - [5. Custom 404 Templates](#5-custom-404-templates)
+    - [6.](#6)
 
 ## Setup
 
@@ -403,3 +405,16 @@ TEMPLATES = [
 
 See [base.html](my_site/templates/base.html) and [child.html](my_site/my_app/templates/my_app/child.html) for more details.
 
+### 5. Custom 404 Templates
+
+There are built-in 404 templates in Django, but it's not easy to customize them. To customize the 404 template, create a new file named `404.html` in the sit level `templates` folder. Change DEBUG to False, and set ALLOWED_HOSTS to the host name of the website, Django will automatically use this file as the 404 template.
+
+To customized different types of error pages, create different files named `404.html`, `403.html`, `400.html`.
+
+The error page can also be renamed to spicific customized name, such as `my404.html` et al. This need to be rendered in the views.py file created in the site level folder, and use handler404 parameter to specify the error view in url.py file. See [views.py](my_site/my_site/views.py) [url.py](my_site/my_site/urls.py) for more details.
+
+> Note: when creating the error view function, there should have an exception parameter.
+
+But it's not recommended to rename the error page, because it's not friendly to co-wokers. Just keep the default 404 page name, and the render procedure stated above will work.
+
+### 6.
