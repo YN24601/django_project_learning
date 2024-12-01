@@ -1,7 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-    <p>
-        Child content
-    </p>
+    <img src="{% static 'my_app/IMG.jpg' %}" alt="child" width="200" height="200">
 {% endblock content %}

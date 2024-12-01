@@ -24,7 +24,8 @@ Personal learning project to explore bootstrap and Django.
     - [4. Tags and URL mapping](#4-tags-and-url-mapping)
     - [5. Template inheritance](#5-template-inheritance)
     - [5. Custom 404 Templates](#5-custom-404-templates)
-    - [6.](#6)
+    - [6. Static Files with Tags](#6-static-files-with-tags)
+  - [Model and Database](#model-and-database)
 
 ## Setup
 
@@ -417,4 +418,26 @@ The error page can also be renamed to spicific customized name, such as `my404.h
 
 But it's not recommended to rename the error page, because it's not friendly to co-wokers. Just keep the default 404 page name, and the render procedure stated above will work.
 
-### 6.
+### 6. Static Files with Tags
+
+Django provides a built-in static files management system, which can be used to manage static files such as CSS, JavaScript, images, etc. in the project. Instead of having to refer them by paths, Django provides a way to refer to them by using Tags.
+
+It's similar to the [{% url %}](#4-tags-and-url-mapping) tag, but using {% static %} tag.
+
+1. check if 'django.contrib.staticfiles' is in INSTALLED_APPS. It is already in the default settings.py file, so no need to add it manually, just make sure it's not commented out. \
+2. make sure the 'STATIC_URL' is set to '/static/'. This path is the path that Django will use to refer to static files, it can be changed to any path, but it's recommended to use '/static/'.
+3. create a static folder in the app level folder, and a subdirectory named the same as the app name (same as the templates folder). This is the folder that Django will use to store static files for the app.
+4. Move the static files to the static folder.
+5. Call {% load static %} in the template file.'
+
+    ```html
+    {% extends "base.html" %}
+    {% load static %}
+
+    {% block content %}
+        <img src="{% static 'my_app/IMG.jpg' %}" alt="my image" width="200" height="200">
+    {% endblock content %}
+    ```
+
+## Model and Database
+
