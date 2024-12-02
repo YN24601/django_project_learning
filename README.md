@@ -26,6 +26,7 @@ Personal learning project to explore bootstrap and Django.
     - [5. Custom 404 Templates](#5-custom-404-templates)
     - [6. Static Files with Tags](#6-static-files-with-tags)
   - [Model and Database](#model-and-database)
+    - [1. Migration and creating a Model](#1-migration-and-creating-a-model)
 
 ## Setup
 
@@ -441,3 +442,27 @@ It's similar to the [{% url %}](#4-tags-and-url-mapping) tag, but using {% stati
 
 ## Model and Database
 
+In this section, the focus is on how to use Django's ORM to interact with the database (CRUD-Create, Read, Update, Delete). The database used is SQLite, which is already included in Django.
+
+### 1. Migration and creating a Model
+
+Django Models are defined in the models.py file in the app level folder. Its a class that converts python codes to SQL commands.
+
+Migration is the process of applying the changes made to the model to the database. It's a set of instructions that will be used to apply the changes to the database. There are three commands that can be used to manage migrations:
+
+- makemigretions: create the set of instructions that will be used to apply the changes to the database.
+    > python manage.py makemigrations [app_name]
+    a migration file will be created in the app level folder.
+- migrate: run existing migrations created by makemigrations to apply the changes to the database.
+    > python manage.py migrate
+- sqlmigrate: show the SQL commands that will be executed by the migration.
+    > python manage.py sqlmigrate [app_name] [migration_code]
+
+Steps to create a model and migrate it to the database:
+
+1. Start a new project.
+2. Initial project migrate command: `python manage.py migrate` to create the database. It will automatically create tables accroding to the models defined in the app.
+3. Create an app and a model.
+4. Register the app class in the INSTALLED_APPS list in settings.py `'office.apps.OfficeConfig'`
+5. Run `python manage.py makemigrations [app_name]` for the app to create the [migration file](my_site_01/office/migrations/0001_initial.py).
+6. Run `python manage.py migrate` for new migrations to apply the changes to the database.
