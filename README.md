@@ -16,7 +16,7 @@ Personal learning project to explore bootstrap and Django.
   - [Views \& Templates](#views--templates)
     - [1. Create templates and connect to views](#1-create-templates-and-connect-to-views)
     - [2. Template directory and rendering](#2-template-directory-and-rendering)
-      - [start a new project:](#start-a-new-project)
+      - [start a new project](#start-a-new-project)
   - [Django template language](#django-template-language)
     - [1. Template variable and context](#1-template-variable-and-context)
     - [2. Template Comment](#2-template-comment)
@@ -27,6 +27,14 @@ Personal learning project to explore bootstrap and Django.
     - [6. Static Files with Tags](#6-static-files-with-tags)
   - [Model and Database](#model-and-database)
     - [1. Migration and creating a Model](#1-migration-and-creating-a-model)
+    - [2. Data Iteration](#2-data-iteration)
+      - [1. Create](#1-create)
+      - [2. Reading and Querying](#2-reading-and-querying)
+      - [3. Updating](#3-updating)
+        - [1. Update models](#1-update-models)
+        - [2. Update database entries](#2-update-database-entries)
+      - [4. Deleting](#4-deleting)
+    - [3. Connecting templates and Database models](#3-connecting-templates-and-database-models)
 
 ## Setup
 
@@ -36,19 +44,19 @@ run the following command in the terminal:
 > django-admin startproject project_name
 which creates the following structure:
 
-* project_name
-  * \_\_init__.py -->>> package init file
-  * settings.py -->>> config setting for the project
-  * urls.py -->>> url routing for the project
-  * asgi.py -->>> ASGI config for the project; web server gateway interface
-  * wsgi.py -->>> WSGI config for the project; web server gateway interface
-* manage.py -->>> command line utility for administrative tasks
+- project_name
+  - \_\_init__.py -->>> package init file
+  - settings.py -->>> config setting for the project
+  - urls.py -->>> url routing for the project
+  - asgi.py -->>> ASGI config for the project; web server gateway interface
+  - wsgi.py -->>> WSGI config for the project; web server gateway interface
+- manage.py -->>> command line utility for administrative tasks
 
 get into this folder and run the following command in the terminal:
 
-> python3 manage.py runserver 
+> python3 manage.py runserver
 
-to run the server on a designated port 
+to run the server on a designated port
 > python3 manage.py runserver 8080
 
 ctrl + c to stop the server
@@ -250,7 +258,7 @@ urlpatterns = [
 
 Usually the template foders are separated base on their applictions, the foder name is the same as the app name. So we need to register the custom appliction ,and its cooresponding template folder in the settings.py file. [vedio link]( https://www.bilibili.com/video/BV16a41147Xh/?p=58)
 
-#### start a new project:
+#### start a new project
 
 Create a new project and add a application by using the command:
 > django-admin startproject my_site
@@ -271,7 +279,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-run the command: 
+run the command:
 > python3 manage.py makemigrations my_app
 
 Now the project will not need to worry about the DIRS of templates in the setting.py, because the templates folder will be in the my_app folder (APP_DIR should be set to True in the settings.py file).
@@ -466,3 +474,120 @@ Steps to create a model and migrate it to the database:
 4. Register the app class in the INSTALLED_APPS list in settings.py `'office.apps.OfficeConfig'`
 5. Run `python manage.py makemigrations [app_name]` for the app to create the [migration file](my_site_01/office/migrations/0001_initial.py).
 6. Run `python manage.py migrate` for new migrations to apply the changes to the database.
+
+### 2. Data Iteration
+
+use command `python3 manage.py shell` to interact with the project in the shell.
+
+#### 1. Create
+
+3 methods to create new data entries:
+
+- Instance an object and object_name.save()
+
+    ```python
+    patient = Patient(first_name='cark', last_name='smith', age=30)
+    patient.save()
+    ```
+
+- Class_name.object.create()
+
+    ```python
+    Patient.objects.create(first_name='susan', last_name='smith', age=28)
+    ```
+
+- Class_name.object.bulk_create()
+
+    ```python
+    mylist = [
+        Patient(first_name='yana', last_name='zhang', age=23), 
+        Patient(first_name='adam', last_name='smith', age=60)
+        ]
+    Patient.objects.bulk_create(mylist)
+    ```
+
+#### 2. Reading and Querying
+
+methods to query data: .all(), .get(), .filter(), .exclude() and using operators.
+
+- .all() returns all the objects in the database.
+
+    ```python
+    Patient.objects.all()
+    ```
+
+- .get() returns a single object that matches the given parameters.
+
+    ```python
+    Patient.objects.get(first_name='cark')
+    Patient.objects.get(first_name='cark', last_name='smith')
+    Patient.objects.get(pk=1) # get the object with primary key(pk)
+    ```
+
+- .filter() returns a QuerySet of objects that match the given parameters.
+
+    ```python
+    Patient.objects.filter(last_name='smith')
+    Patient.objects.filter(last_name='smith').filter(age=30)
+    ```
+
+- .exclude() returns a QuerySet of objects that do not match the given parameters.
+
+    ```python
+    Patient.objects.exclude(last_name='smith')
+    ```
+
+- using Q() to specify complex queries, '__' to specify the field. See details in [Django documentation](https://docs.djangoproject.com/en/5.1/topics/db/queries/#complex-lookups-with-q-objects).
+  
+    ```python
+    from Django.db.models import Q
+    Patient.objects.filter(Q(first_name='cark') | Q(last_name='smith'))
+    Patient.objects.filter(Q(first_name='cark') & Q(last_name='smith'))
+    Patient.objects.filter(~Q(first_name='cark'))
+    Patient.objects.filter(last_name__startswith='s')
+    Patient.objects.filter(age__gt=30)
+    ```
+
+#### 3. Updating
+
+##### 1. Update models
+
+When add new attributes to the models, need to define a default value for them. Use validator to check the if the data is resonable.
+
+```py
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+    heartrate = models.IntegerField(default=60, validators=[MinValueValidator(0), MaxValueValidator(200)])
+```
+
+After adding new attributes, remember to migrate the database.
+
+> python manage.py makemigrations
+> python manage.py migrate
+
+##### 2. Update database entries
+
+- update the object attributes, then use save() method to update the database.
+
+    ```python
+    yana = Patient.objects.get(first_name='yana')
+    yana.heartrate = 65
+    yana.save()
+    ```
+
+#### 4. Deleting
+
+- delete() method to delete the objects.
+
+    ```python
+    yana=Patient.objects.filter(first_name='yana')
+    yana.delete()
+    ```
+
+### 3. Connecting templates and Database models
+
+Create a view function in [views.py](my_site_01/office/views.py), import the model and use it in the view function, then render the template.
+
+In [templates](my_site_01/office/templates/office/list.html), use django template language to display the data.
+
+In [urls.py](my_site_01/office/urls.py), import the view function and add it to the url pattern, connect the url path to the [site url.py](my_site_01/my_site_01/urls.py).
