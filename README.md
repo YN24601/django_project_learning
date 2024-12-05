@@ -35,6 +35,13 @@ Personal learning project to explore bootstrap and Django.
         - [2. Update database entries](#2-update-database-entries)
       - [4. Deleting](#4-deleting)
     - [3. Connecting templates and Database models](#3-connecting-templates-and-database-models)
+  - [Django Admin](#django-admin)
+    - [1. Create a new site](#1-create-a-new-site)
+    - [1. Access the admin panel](#1-access-the-admin-panel)
+    - [2. Connecting models to admin](#2-connecting-models-to-admin)
+  - [Django Forms](#django-forms)
+  - [Class-based Views](#class-based-views)
+  - [Django Deployment](#django-deployment)
 
 ## Setup
 
@@ -591,3 +598,40 @@ Create a view function in [views.py](my_site_01/office/views.py), import the mod
 In [templates](my_site_01/office/templates/office/list.html), use django template language to display the data.
 
 In [urls.py](my_site_01/office/urls.py), import the view function and add it to the url pattern, connect the url path to the [site url.py](my_site_01/my_site_01/urls.py).
+
+## Django Admin
+
+Django admin is a built-in application that allows you to manage your database through a web interface.
+
+### 1. Create a new site
+
+Create [my_car_site](my_car_site):
+> django-admin startproject my_car_site
+> cd my_car_site
+> python3 manage.py startapp cars
+
+- Create project level templates folder and add [base.html](my_car_site/templates/base.html) to it, using os.path.join(BASE_DIR, 'templates').
+
+- Create app level templates folder and add html files to it. Add the path to the [settings.py](my_car_site/my_car_site/settings.py)
+- Connect the templates to the views in [views.py](my_car_site/cars/views.py).
+- Create an [urls.py](my_car_site/cars/urls.py) in the app folder, set app_name for namespacin, and add the url patterns.
+- Include the app urls in the project level [urls.py](my_car_site/my_car_site/urls.py).
+- Add the AppConfig class in [app.py](my_car_site/cars/apps.py) and add the app to the installed apps in [settings.py](my_car_site/my_car_site/settings.py).
+
+- Create a car model in the [cars/models.py](my_car_site/cars/models.py) file.
+- Add functionality to the views.py file.
+- Create HTML forms to send data to the views.
+
+> python3 manage.py makemigrations cars
+> python3 manage.py migrate
+> python3 manage.py runserver
+
+### 1. Access the admin panel
+
+### 2. Connecting models to admin
+
+## Django Forms
+
+## Class-based Views
+
+## Django Deployment
