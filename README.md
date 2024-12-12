@@ -37,8 +37,9 @@ Personal learning project to explore bootstrap and Django.
     - [3. Connecting templates and Database models](#3-connecting-templates-and-database-models)
   - [Django Admin](#django-admin)
     - [1. Create a new site](#1-create-a-new-site)
-    - [1. Access the admin panel](#1-access-the-admin-panel)
+    - [1. Create a superuser](#1-create-a-superuser)
     - [2. Connecting models to admin](#2-connecting-models-to-admin)
+    - [3. Customizing the admin interface](#3-customizing-the-admin-interface)
   - [Django Forms](#django-forms)
   - [Class-based Views](#class-based-views)
   - [Django Deployment](#django-deployment)
@@ -626,9 +627,32 @@ Create [my_car_site](my_car_site):
 > python3 manage.py migrate
 > python3 manage.py runserver
 
-### 1. Access the admin panel
+### 1. Create a superuser
+
+run the command:
+> python3 manage.py createsuperuser
+
+Set the username, email and pw.
+
+Then run the server, and visit domain.com/admin/
 
 ### 2. Connecting models to admin
+
+To connect the models to Django Admin interface, we need to import the model inside the [admin.py](my_car_site/cars/admin.py) file and register it.
+
+'''python
+from .models import Cars
+admin.site.register(Car)
+'''
+
+Run the server, and there will be a Cars administration page. Superuser can add, edit, delete and view the cars data.
+
+site: domain.com/admin/application_name/model_name/instance_id/
+
+### 3. Customizing the admin interface
+
+To customize the admin interface, we need to define a ModelAdmin calss in the [admin.py](my_car_site/cars/admin.py) file. See [website](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#modeladmin-objects) for more details.
+
 
 ## Django Forms
 

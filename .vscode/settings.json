@@ -8,5 +8,6 @@
     ],
     "emmet.includeLanguages": {
      "django-html": "html",
-}
+},
+"Codegeex.CompletionDelay": 0.4
 }
