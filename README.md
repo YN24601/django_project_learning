@@ -41,6 +41,11 @@ Personal learning project to explore bootstrap and Django.
     - [2. Connecting models to admin](#2-connecting-models-to-admin)
     - [3. Customizing the admin interface](#3-customizing-the-admin-interface)
   - [Django Forms](#django-forms)
+    - [1. Get, Post and CSRF](#1-get-post-and-csrf)
+    - [2. Django Form Class Basics](#2-django-form-class-basics)
+    - [3. Form Fields and Validation](#3-form-fields-and-validation)
+    - [4. Form Widgets and CSS styling](#4-form-widgets-and-css-styling)
+    - [5. Model Forms](#5-model-forms)
   - [Class-based Views](#class-based-views)
   - [Django Deployment](#django-deployment)
 
@@ -653,9 +658,79 @@ site: domain.com/admin/application_name/model_name/instance_id/
 
 To customize the admin interface, we need to define a ModelAdmin calss in the [admin.py](my_car_site/cars/admin.py) file. See [website](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#modeladmin-objects) for more details.
 
-
 ## Django Forms
+
+Traditional HTML forms are used to send data to the server, which requires a lot of processing to connect with Django, see [1. Create a new site](#1-create-a-new-site). Django have this build-in Forms class to make it easier to send data to the server through using the Tag `{{forms}}`
+
+### 1. Get, Post and CSRF
+
+- Get: request data from the server, and display it on the page.
+- Post: send data to the server.
+- CSRF: Cross Site Request Forgery, a security feature to prevent the data from being sent to the server by a malicious website.
+
+Gjango automatically add CSRF token to the form, and check it when the form is submitted. Just include the `{% csrf_token %}` in the form.
+
+### 2. Django Form Class Basics
+
+- Create a new [Django project](my_site_05) and add a new app(cars). Set up the app, templates, and connect the urls.
+
+- Create a [forms.py](my_site_05/cars/forms.py) file in the app folder, and define a form class in it. By defining contributes, Django will automatically generate the HTML form fields and validation. See [website](https://docs.djangoproject.com/en/4.2/topics/forms/)for more details.
+
+  ```python
+    from django import forms
+
+    class ReviewForm(forms.Form):
+        first_name = forms.CharField(label='First Name', max_length=100)
+        last_name = forms.CharField(label='Last Name', max_length=100)
+        email = forms.EmailField(label='Email')
+        review = forms.CharField(label='Write you review here', widget=forms.Textarea)
+    ```
+
+- Import the form class in the [views.py](my_site_05/cars/views.py) file, and pass it to the context.
+
+    ```python
+    from django.shortcuts import render, redirect
+    from .forms import ReviewForm
+    from django.urls import reverse
+
+    # Create your views here.
+    def rental_review(request):
+        # Post Request  --> Form Content -->Thank you
+        if request.method == 'POST':
+            form = ReviewForm(request.POST)
+
+            if form.is_valid():
+                print(form.cleaned_data)
+                return redirect(reverse('cars:thank_you'))
+        # Else render the form
+        else:
+            form = ReviewForm()
+        return render(request, 'cars/rental_review.html', context={'form':form})
+
+    def thank_you(request):
+        return render(request, 'cars/thank_you.html')
+    ```
+
+- Add Djange forms in the [rental_review.html](my_site_05/cars/templates/cars/rental_review.html) file.
+  
+    ```html
+    <form action="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Submit">
+    </form>
+    ```
+
+### 3. Form Fields and Validation
+
+### 4. Form Widgets and CSS styling
+
+### 5. Model Forms
 
 ## Class-based Views
 
+(80 min)
+
 ## Django Deployment
+
+(40 min)
