@@ -43,7 +43,6 @@ Personal learning project to explore bootstrap and Django.
   - [Django Forms](#django-forms)
     - [1. Get, Post and CSRF](#1-get-post-and-csrf)
     - [2. Django Form Class Basics](#2-django-form-class-basics)
-    - [3. Form Fields and Validation](#3-form-fields-and-validation)
     - [4. Form Widgets and CSS styling](#4-form-widgets-and-css-styling)
     - [5. Model Forms](#5-model-forms)
   - [Class-based Views](#class-based-views)
@@ -711,17 +710,43 @@ Gjango automatically add CSRF token to the form, and check it when the form is s
         return render(request, 'cars/thank_you.html')
     ```
 
-- Add Djange forms in the [rental_review.html](my_site_05/cars/templates/cars/rental_review.html) file.
+- Add Djange forms in the [rental_review.html](my_site_05/cars/templates/cars/rental_review.html) file. Use `form.as_p` to render the form fields.
   
     ```html
     <form action="POST">
         {% csrf_token %}
-        {{form}}
+        {{form.as_p }}
         <input type="submit" value="Submit">
     </form>
     ```
 
-### 3. Form Fields and Validation
+### 3. Django Form Rendering
+
+Django form can be rendered in different ways, see [website](https://docs.djangoproject.com/en/4.2/topics/forms/#rendering-forms) for more details.
+
+- `form.as_p`: Render the form fields as a paragraph.
+
+- `form.as_ul`: Render the form fields as a unordered list.
+
+To access the form fields, we can use the `{{form.field_name}}` in the template.
+
+- `form.field_name.lable_tag`: Render the label of the field.
+
+A form field can also be looped.
+
+```html
+    <div class='container'>
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form%}
+        <div class='mb-3'>
+            {{field.label_tag}} 
+        </div>
+        {{field}}
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+```
 
 ### 4. Form Widgets and CSS styling
 
