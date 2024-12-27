@@ -750,6 +750,43 @@ A form field can also be looped.
 
 ### 4. Form Widgets and CSS styling
 
+Form.py can render the actual HTML form tags, and the widget attributes can be customized to change the appearance of the form fields.
+
+To begin with, create a [custom.css](my_site_05/cars/static/cars/custom.css) file in the static folder of the app, and add some CSS styles.
+
+Then load the static files in the [rental_review.html](my_site_05/cars/templates/cars/rental_review.html) file by adding the following line at the top of the file.
+
+```html
+    {% load static %}
+```
+
+and then add the following line in the head section of the file.
+
+```html
+    <link rel="stylesheet" href="{% static 'cars/custom.css' %}">
+```
+
+Run the following command to register the static files.
+
+```bash
+    python manage.py 
+```
+
+Each form field can be customized by adding the `widget` attribute in the form class.
+
+Core field attributes: see [website](https://docs.djangoproject.com/en/4.2/ref/forms/fields/#core-field-arguments) for more details. Ep:
+
+```python
+    review = forms.CharField(label='Write you review here', widget=forms.Textarea)
+```
+
+How to style it? add attributes to the widget.
+
+```python
+    review = forms.CharField(label='Write you review here', widget=forms.Textarea(attrs={'class':'myform'}))
+```
+
+
 ### 5. Model Forms
 
 ## Class-based Views
