@@ -10,6 +10,7 @@ def rental_review(request):
 
         if form.is_valid():
             print(form.cleaned_data)
+            form.save()
             return redirect(reverse('cars:thank_you'))
     # Else render the form
     else:

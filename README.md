@@ -45,6 +45,7 @@ Personal learning project to explore bootstrap and Django.
     - [2. Django Form Class Basics](#2-django-form-class-basics)
     - [4. Form Widgets and CSS styling](#4-form-widgets-and-css-styling)
     - [5. Model Forms](#5-model-forms)
+    - [6. ModelForm customization](#6-modelform-customization)
   - [Class-based Views](#class-based-views)
   - [Django Deployment](#django-deployment)
 
@@ -786,8 +787,39 @@ How to style it? add attributes to the widget.
     review = forms.CharField(label='Write you review here', widget=forms.Textarea(attrs={'class':'myform'}))
 ```
 
-
 ### 5. Model Forms
+
+Django provides the ModelForm whichi can automatically generate the form fields based on the model fields.
+
+1. create a model in the [models.py](my_site_05/cars/models.py) file.
+2. register the model in the [admin.py](my_site_05/cars/admin.py) file.
+
+   ```python
+    from .models import Review
+    admin.site.register(Review)
+    ```
+
+    then run the following command, to create the review database of cars app.
+    `python3 manage.py makemigrations`
+    `python3 manage.py migrate`
+
+3. create form in the [forms.py](my_site_05/cars/forms.py) file accroding to the model.
+
+   ```python
+    from .models import Review
+    from django.forms import ModelForm
+
+    class ReviewForm(ModelForm):
+        class Meta:
+            model = Review
+            fields = ['first_name', 'last_name', 'stars']
+    ```
+
+4. add `form.save()` in the [views.py](my_site_05/cars/views.py) file to save the submited form data to the database.
+
+See [Creating forms from models](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) for more details.
+
+### 6. ModelForm customization
 
 ## Class-based Views
 
