@@ -45,7 +45,6 @@ Personal learning project to explore bootstrap and Django.
     - [2. Django Form Class Basics](#2-django-form-class-basics)
     - [4. Form Widgets and CSS styling](#4-form-widgets-and-css-styling)
     - [5. Model Forms](#5-model-forms)
-    - [6. ModelForm customization](#6-modelform-customization)
   - [Class-based Views](#class-based-views)
   - [Django Deployment](#django-deployment)
 
@@ -820,6 +819,51 @@ Django provides the ModelForm whichi can automatically generate the form fields 
 See [Creating forms from models](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) for more details.
 
 ### 6. ModelForm customization
+
+in forms.py:
+
+``` python
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        # 1. pass in only the fields you want to show
+        # fields = ['first_name', 'last_name']
+        # 2. pass in all fields
+        fields = "__all__" 
+        # 3. use labels attributes to set field labels
+        labels = {
+            'first_name': 'Your First Name',
+            'last_name': 'Your Last Name',
+            'stars': 'Rating (1-5)',
+        }
+```
+
+in Models.py, set validators for the fields:
+
+``` python
+from django.core.validators import MinValueValidator, MaxValueValidator
+# ...
+stars  = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+```
+
+To show error messages, add the following line in the form tag.
+
+```html
+    {{field.errors}}
+```
+
+It can also be customized by adding the `error_messages` attribute in the form class.
+
+```python
+        error_messages = {
+            'stars': {
+                'min_value': '评分不能低于1',
+                'max_value': '评分不能超过5',
+            }
+        }
+```
+
+
 
 ## Class-based Views
 
