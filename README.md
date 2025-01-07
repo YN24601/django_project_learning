@@ -45,7 +45,9 @@ Personal learning project to explore bootstrap and Django.
     - [2. Django Form Class Basics](#2-django-form-class-basics)
     - [4. Form Widgets and CSS styling](#4-form-widgets-and-css-styling)
     - [5. Model Forms](#5-model-forms)
-  - [Class-based Views](#class-based-views)
+  - [Class Based Views](#class-based-views)
+    - [Class Based Views Basics](#class-based-views-basics)
+    - [Generic Views](#generic-views)
   - [Django Deployment](#django-deployment)
 
 ## Setup
@@ -863,11 +865,22 @@ It can also be customized by adding the `error_messages` attribute in the form c
         }
 ```
 
+## Class Based Views
 
+### Class Based Views Basics
 
-## Class-based Views
+1. create a [school](school/) site.
 
-(80 min)
+2. In [views.py](school/classroom/views.py), create a class based view and use `as_view()` in the [urls.py](school/classroom/urls.py) file to register the view.
+
+### Generic Views
+
+1. TemplateView
+2. FormView
+3. CreateView
+4. ListView
+5. DetailView
+6. UpdateView
 
 ## Django Deployment
 
