@@ -877,9 +877,14 @@ It can also be customized by adding the `error_messages` attribute in the form c
 
 1. TemplateView
 2. FormView
+   create a [ContactForm](school/classroom/forms.py) in the forms.py file.
+   create a [ContactFormView](school/classroom/views.py) in the views.py file.
+   register the view in the [urls.py](school/classroom/urls.py) file.
 3. CreateView
+   to use the convient generic model based views, the template name shoule follow a specific naming pattern. For example: `model_form.html/teacher_form.html`
 4. ListView
 5. DetailView
+   View the detaild information of a specific object.
 6. UpdateView
 
 ## Django Deployment
